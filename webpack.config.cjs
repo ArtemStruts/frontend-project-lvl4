@@ -2,17 +2,19 @@
 
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const mode = process.env.NODE_ENV || 'development';
 
 module.exports = {
   mode,
+  entry: './src/index.jsx',
   resolve: {
     extensions: ['.js', '.jsx'],
   },
   output: {
     path: path.join(__dirname, 'dist', 'public'),
-    publicPath: '/assets/',
+    filename: 'main.js',
   },
   devServer: {
     compress: true,
@@ -23,6 +25,9 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin(),
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+    }),
   ],
   module: {
     rules: [
