@@ -10,7 +10,7 @@
     "test": "echo 'no tests for this project'",
     "prebuild": "rm -rf dist",
     "build": "NODE_ENV=production npx webpack --mode production",
-    "start": "node bin/slack.js"
+    "start": "node --experimental-modules bin/slack.js"
   },
   "repository": {
     "type": "git",
