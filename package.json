@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/index.jsx",
   "engines": {
-    "node": "14.x"
+    "node": "14"
   },
   "scripts": {
     "test": "echo 'no tests for this project'",
