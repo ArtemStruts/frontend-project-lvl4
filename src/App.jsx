@@ -30,7 +30,7 @@ const App = () => (
   </Router>
 );
 
-const Home = () => (<h3>Matched!</h3>);
+const Home = () => (<h3>Home</h3>);
 
 const NoMatch = () => (<h3>404 (not found)</h3>);
 

@@ -19,11 +19,11 @@ const Login = () => (
     >
       {({ errors }) => (
         <Form>
-          <Field name="name" />
+          <Field name="name" placeholder="Ваш ник" />
           {errors.name ? (
             <div>{errors.name}</div>
           ) : null}
-          <Field name="password" />
+          <Field name="password" type="password" placeholder="Пароль" />
           {errors.password ? (
             <div>{errors.password}</div>
           ) : null}
