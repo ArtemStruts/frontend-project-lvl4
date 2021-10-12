@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { Formik } from 'formik';
 import {
   Container,
@@ -12,6 +12,7 @@ import {
 import * as yup from 'yup';
 import axios from 'axios';
 import useAuth from '../hooks/index.jsx';
+import routes from '../routes.js';
 
 const SignUpSchema = yup.object().shape({
   username: yup.string().min(2, 'От 2 до 20 символов').max(20, 'От 2 до 20 символов').required(),
@@ -21,18 +22,23 @@ const SignUpSchema = yup.object().shape({
 const Login = () => {
   const auth = useAuth();
   const history = useHistory();
+  const location = useLocation();
+  const [authFailed, setAuthFailed] = useState(false);
 
-  const [errors, setErrors] = useState(null);
   const handlerSubmit = async (values, { setSubmitting }) => {
-    setErrors(null);
+    setAuthFailed(false);
     try {
-      const res = await axios.post('/api/v1/login', { ...values });
-      auth.signIn(res.data);
-      history.push('/');
+      const res = await axios.post(routes.loginPath(), values);
+      localStorage.setItem('userId', JSON.stringify(res.data));
+      auth.logIn();
+      const { from } = location.state || { from: { pathname: '/' } };
+      history.replace(from);
     } catch (e) {
-      if (e.response.status === 401) {
-        setErrors('Неверные имя пользователя или пароль');
+      if (e.isAxiosError && e.response.status === 401) {
+        setAuthFailed(true);
+        return;
       }
+      throw e;
     }
     setSubmitting(false);
   };
@@ -71,7 +77,7 @@ const Login = () => {
                         type="text"
                         onChange={handleChange}
                         readOnly={isSubmitting}
-                        isInvalid={errors}
+                        isInvalid={authFailed}
                         value={values.username}
                       />
                     </Form.Group>
@@ -84,10 +90,10 @@ const Login = () => {
                         placeholder="Пароль"
                         onChange={handleChange}
                         readOnly={isSubmitting}
-                        isInvalid={errors}
+                        isInvalid={authFailed}
                         value={values.password}
                       />
-                      <Form.Control.Feedback type="invalid">{errors}</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль</Form.Control.Feedback>
                     </Form.Group>
                     <Button
                       type="submit"

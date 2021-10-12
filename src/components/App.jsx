@@ -10,25 +10,19 @@ import useAuth from '../hooks/index.jsx';
 import Login from './Login.jsx';
 import AppNavbar from './Navbar.jsx';
 
-const useProvideAuth = () => {
-  const usernameToken = localStorage.getItem('token');
-  const [userToken, setUserToken] = useState(usernameToken);
-
-  const signIn = ({ token, username }) => {
-    localStorage.setItem('token', token);
-    localStorage.setItem('username', username);
-    setUserToken(token);
-  };
-  return {
-    userToken,
-    signIn,
-  };
-};
-
 const ProvideAuth = ({ children }) => {
-  const auth = useProvideAuth();
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  const logIn = () => {
+    setLoggedIn(true);
+  };
+  const logOut = () => {
+    localStorage.removeItem('userId');
+    setLoggedIn(false);
+  };
+
   return (
-    <authContext.Provider value={auth}>
+    <authContext.Provider value={{ loggedIn, logIn, logOut }}>
       {children}
     </authContext.Provider>
   );
@@ -36,10 +30,15 @@ const ProvideAuth = ({ children }) => {
 
 const PrivateRoute = ({ children, exact, path }) => {
   const auth = useAuth();
+
   return (
-    <Route exact={exact} path={path}>
-      {auth.userToken ? children : <Redirect to="/login" />}
-    </Route>
+    <Route
+      exact={exact}
+      path={path}
+      render={({ location }) => (auth.loggedIn
+        ? children
+        : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
+    />
   );
 };
 
