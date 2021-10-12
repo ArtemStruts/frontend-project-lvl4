@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import axios from 'axios';
-import { useAuth } from './hooks/useAuth.jsx';
+import useAuth from '../hooks/index.jsx';
 
 const SignUpSchema = yup.object().shape({
   username: yup.string().min(2, 'От 2 до 20 символов').max(20, 'От 2 до 20 символов').required(),
@@ -27,7 +27,6 @@ const Login = () => {
     setErrors(null);
     try {
       const res = await axios.post('/api/v1/login', { ...values });
-      console.log(auth);
       auth.signIn(res.data);
       history.push('/');
     } catch (e) {

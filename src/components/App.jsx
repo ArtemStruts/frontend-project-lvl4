@@ -5,7 +5,8 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import { authContext, useAuth } from './hooks/useAuth.jsx';
+import authContext from '../contexts/index.jsx';
+import useAuth from '../hooks/index.jsx';
 import Login from './Login.jsx';
 import AppNavbar from './Navbar.jsx';
 
