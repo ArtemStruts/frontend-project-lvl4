@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Formik } from 'formik';
 import {
   Container,
@@ -22,7 +22,6 @@ const SignUpSchema = yup.object().shape({
 const Login = () => {
   const auth = useAuth();
   const history = useHistory();
-  const location = useLocation();
   const [authFailed, setAuthFailed] = useState(false);
 
   const handlerSubmit = async (values, { setSubmitting }) => {
@@ -31,8 +30,7 @@ const Login = () => {
       const res = await axios.post(routes.loginPath(), values);
       localStorage.setItem('userId', JSON.stringify(res.data));
       auth.logIn();
-      const { from } = location.state || { from: { pathname: '/' } };
-      history.replace(from);
+      history.replace('/');
     } catch (e) {
       if (e.isAxiosError && e.response.status === 401) {
         setAuthFailed(true);

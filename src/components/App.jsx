@@ -12,7 +12,8 @@ import Chat from './Chat.jsx';
 import AppNavbar from './Navbar.jsx';
 
 const ProvideAuth = ({ children }) => {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const userId = localStorage.getItem('userId');
+  const [loggedIn, setLoggedIn] = useState(userId);
 
   const logIn = () => {
     setLoggedIn(true);
@@ -36,10 +37,11 @@ const PrivateRoute = ({ children, exact, path }) => {
     <Route
       exact={exact}
       path={path}
-      render={({ location }) => (auth.loggedIn
+    >
+      {(auth.loggedIn
         ? children
-        : <Redirect to={{ pathname: '/login', state: { from: location } }} />)}
-    />
+        : <Redirect to={{ pathname: '/login' }} />)}
+    </Route>
   );
 };
 
