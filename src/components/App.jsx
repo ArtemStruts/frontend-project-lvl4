@@ -8,6 +8,7 @@ import {
 import authContext from '../contexts/index.jsx';
 import useAuth from '../hooks/index.jsx';
 import Login from './Login.jsx';
+import Chat from './Chat.jsx';
 import AppNavbar from './Navbar.jsx';
 
 const ProvideAuth = ({ children }) => {
@@ -49,7 +50,7 @@ const App = () => (
 
       <Switch>
         <PrivateRoute exact path="/">
-          <Home />
+          <Chat />
         </PrivateRoute>
         <Route path="/login">
           <Login />
@@ -61,8 +62,6 @@ const App = () => (
     </Router>
   </ProvideAuth>
 );
-
-const Home = () => (<h3>Home</h3>);
 
 const NoMatch = () => (<h3>404 (not found)</h3>);
 
