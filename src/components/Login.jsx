@@ -11,7 +11,7 @@ import {
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import axios from 'axios';
-import useAuth from '../hooks/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
 
 const SignUpSchema = yup.object().shape({

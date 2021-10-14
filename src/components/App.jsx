@@ -5,11 +5,14 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import authContext from '../contexts/index.jsx';
-import useAuth from '../hooks/index.jsx';
+import { io } from 'socket.io-client';
+import { useDispatch } from 'react-redux';
+import { authContext, socketContext } from '../contexts/index.jsx';
+import { useAuth } from '../hooks/index.jsx';
 import Login from './Login.jsx';
 import Chat from './Chat.jsx';
 import AppNavbar from './Navbar.jsx';
+import { addMessage } from '../slices/messagesSlice.js';
 
 const ProvideAuth = ({ children }) => {
   const userId = localStorage.getItem('userId');
@@ -30,6 +33,20 @@ const ProvideAuth = ({ children }) => {
   );
 };
 
+const ProvideSocket = ({ children }) => {
+  const socket = io();
+  const dispatch = useDispatch();
+
+  socket.on('newMessage', (message) => {
+    dispatch(addMessage(message));
+  });
+  return (
+    <socketContext.Provider value={socket}>
+      {children}
+    </socketContext.Provider>
+  );
+};
+
 const PrivateRoute = ({ children, exact, path }) => {
   const auth = useAuth();
 
@@ -47,21 +64,23 @@ const PrivateRoute = ({ children, exact, path }) => {
 
 const App = () => (
   <ProvideAuth>
-    <Router>
-      <AppNavbar />
+    <ProvideSocket>
+      <Router>
+        <AppNavbar />
 
-      <Switch>
-        <PrivateRoute exact path="/">
-          <Chat />
-        </PrivateRoute>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="*">
-          <NoMatch />
-        </Route>
-      </Switch>
-    </Router>
+        <Switch>
+          <PrivateRoute exact path="/">
+            <Chat />
+          </PrivateRoute>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="*">
+            <NoMatch />
+          </Route>
+        </Switch>
+      </Router>
+    </ProvideSocket>
   </ProvideAuth>
 );
 

@@ -7,8 +7,11 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
+import { useSocket } from '../hooks/index.jsx';
 
 const MessageForm = () => {
+  const currentChannelId = useSelector((state) => state.channels.currentChannelId);
+  const socket = useSocket();
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
@@ -18,9 +21,15 @@ const MessageForm = () => {
       body: '',
     },
     onSubmit: ({ body }, { setSubmitting, resetForm }) => {
-      console.log(body);
-      setSubmitting(false);
-      resetForm();
+      const { username } = JSON.parse(localStorage.getItem('userId'));
+      const message = { body, channelId: currentChannelId, username };
+      console.log('body', message);
+      socket.emit('newMessage', message, ({ status }) => {
+        if (status === 'ok') {
+          setSubmitting(false);
+          resetForm();
+        }
+      });
     },
   });
   return (
@@ -34,6 +43,7 @@ const MessageForm = () => {
           ref={inputRef}
           value={f.values.body}
           onChange={f.handleChange}
+          readOnly={f.isSubmitting}
         />
         <Button variant="light" type="submit" disabled={f.isSubmitting || !f.values.body}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="20" height="20" fill="currentColor">
@@ -52,10 +62,12 @@ const Messages = () => {
   const currentChannel = channels.find((item) => item.id === currentChannelId);
   const currentChannelMessages = messages
     .filter(({ channelId }) => Number(channelId) === currentChannelId);
+
   console.log('currentChannelId', currentChannelId);
   console.log('channels', channels);
   console.log('currentChannel', currentChannel);
   console.log('currentChannelMessages', currentChannelMessages);
+
   return (
     <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">
