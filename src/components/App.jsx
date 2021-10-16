@@ -6,13 +6,16 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { authContext, socketContext } from '../contexts/index.jsx';
 import { useAuth } from '../hooks/index.jsx';
 import Login from './Login.jsx';
 import Chat from './Chat.jsx';
 import AppNavbar from './Navbar.jsx';
 import { addMessage } from '../slices/messagesSlice.js';
+import { addChannel, removeChannel, renameChannel } from '../slices/channelsSlice.js';
+import { hideModal } from '../slices/modalsSlice.js';
+import getModal from './modals/index.js';
 
 const ProvideAuth = ({ children }) => {
   const userId = localStorage.getItem('userId');
@@ -38,8 +41,21 @@ const ProvideSocket = ({ children }) => {
   const dispatch = useDispatch();
 
   socket.on('newMessage', (message) => {
-    dispatch(addMessage(message));
+    dispatch(addMessage({ message }));
   });
+
+  socket.on('newChannel', (channel) => {
+    dispatch(addChannel({ channel }));
+  });
+
+  socket.on('removeChannel', ({ id }) => {
+    dispatch(removeChannel({ id }));
+  });
+
+  socket.on('renameChannel', ({ id, name }) => {
+    dispatch(renameChannel({ id, name }));
+  });
+
   return (
     <socketContext.Provider value={socket}>
       {children}
@@ -62,27 +78,43 @@ const PrivateRoute = ({ children, exact, path }) => {
   );
 };
 
-const App = () => (
-  <ProvideAuth>
-    <ProvideSocket>
-      <Router>
-        <AppNavbar />
+const renderModal = (type, onExited) => {
+  if (!type) {
+    return null;
+  }
+  const Component = getModal(type);
+  return <Component onExited={onExited} />;
+};
 
-        <Switch>
-          <PrivateRoute exact path="/">
-            <Chat />
-          </PrivateRoute>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="*">
-            <NoMatch />
-          </Route>
-        </Switch>
-      </Router>
-    </ProvideSocket>
-  </ProvideAuth>
-);
+const App = () => {
+  const type = useSelector((state) => state.modals.type);
+  const dispatch = useDispatch();
+  const onExited = () => {
+    dispatch(hideModal());
+  };
+  return (
+    <ProvideAuth>
+      <ProvideSocket>
+        <Router>
+          <AppNavbar />
+
+          <Switch>
+            <PrivateRoute exact path="/">
+              <Chat />
+            </PrivateRoute>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="*">
+              <NoMatch />
+            </Route>
+          </Switch>
+          {renderModal(type, onExited)}
+        </Router>
+      </ProvideSocket>
+    </ProvideAuth>
+  );
+};
 
 const NoMatch = () => (<h3>404 (not found)</h3>);
 

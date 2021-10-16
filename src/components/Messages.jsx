@@ -15,7 +15,7 @@ const MessageForm = () => {
   const inputRef = useRef();
   useEffect(() => {
     inputRef.current.focus();
-  });
+  }, []);
   const f = useFormik({
     initialValues: {
       body: '',
@@ -23,7 +23,6 @@ const MessageForm = () => {
     onSubmit: ({ body }, { setSubmitting, resetForm }) => {
       const { username } = JSON.parse(localStorage.getItem('userId'));
       const message = { body, channelId: currentChannelId, username };
-      console.log('body', message);
       socket.emit('newMessage', message, ({ status }) => {
         if (status === 'ok') {
           setSubmitting(false);
@@ -63,10 +62,10 @@ const Messages = () => {
   const currentChannelMessages = messages
     .filter(({ channelId }) => Number(channelId) === currentChannelId);
 
-  console.log('currentChannelId', currentChannelId);
-  console.log('channels', channels);
-  console.log('currentChannel', currentChannel);
-  console.log('currentChannelMessages', currentChannelMessages);
+  const messageBox = useRef();
+  useEffect(() => {
+    messageBox.current.scrollTop = messageBox.current.scrollHeight;
+  });
 
   return (
     <Col className="p-0 h-100">
@@ -77,7 +76,7 @@ const Messages = () => {
           </p>
           <span className="text-muted">{`${currentChannelMessages.length} сообщения`}</span>
         </div>
-        <div id="messages-box" className="overflow-auto px-5">
+        <div id="messages-box" ref={messageBox} className="overflow-auto px-5">
           {currentChannelMessages.map(({ id, body, username }) => (
             <div key={id} className="text-break mb-2">
               <b>{username}</b>

@@ -17,9 +17,33 @@ export const channelsSlice = createSlice({
       const newState = state;
       newState.currentChannelId = id;
     },
+    addChannel: (state, { payload: { channel } }) => {
+      const { id } = channel;
+      const channelsIds = state.channels.map((item) => item.id);
+      const newState = state;
+      if (!channelsIds.includes(id)) {
+        newState.channels = [...state.channels, channel];
+      }
+      newState.currentChannelId = id;
+    },
+    removeChannel: (state, { payload: { id } }) => {
+      const newState = state;
+      newState.channels = state.channels.filter((item) => item.id !== id);
+      newState.currentChannelId = 1;
+    },
+    renameChannel: (state, { payload: { id, name } }) => {
+      const channel = state.channels.find((item) => item.id === id);
+      channel.name = name;
+    },
   },
 });
 
-export const { setInitialChannelsState, setCurrentChannelId } = channelsSlice.actions;
+export const {
+  setInitialChannelsState,
+  setCurrentChannelId,
+  addChannel,
+  removeChannel,
+  renameChannel,
+} = channelsSlice.actions;
 
 export default channelsSlice.reducer;
