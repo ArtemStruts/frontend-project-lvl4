@@ -12,6 +12,7 @@ import { useAuth } from '../hooks/index.jsx';
 import Login from './Login.jsx';
 import Chat from './Chat.jsx';
 import AppNavbar from './Navbar.jsx';
+import Signup from './Signup.jsx';
 import { addMessage } from '../slices/messagesSlice.js';
 import { addChannel, removeChannel, renameChannel } from '../slices/channelsSlice.js';
 import { hideModal } from '../slices/modalsSlice.js';
@@ -104,6 +105,9 @@ const App = () => {
             </PrivateRoute>
             <Route path="/login">
               <Login />
+            </Route>
+            <Route path="/signup">
+              <Signup />
             </Route>
             <Route path="*">
               <NoMatch />

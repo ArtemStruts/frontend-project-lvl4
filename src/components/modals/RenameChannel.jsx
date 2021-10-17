@@ -30,7 +30,7 @@ const RenameChannel = (props) => {
     setShow(false);
   };
 
-  const handlerSubmit = () => ({ name }, { setSubmitting }) => {
+  const handlerSubmit = ({ name }, { setSubmitting }) => {
     setAddFailed(false);
     if (channelsNames.includes(name)) {
       setAddFailed(true);
@@ -50,7 +50,7 @@ const RenameChannel = (props) => {
     initialValues: {
       name: channelName,
     },
-    onSubmit: handlerSubmit(),
+    onSubmit: handlerSubmit,
   });
 
   return (

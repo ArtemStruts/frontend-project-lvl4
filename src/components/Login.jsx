@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import {
   Container,
@@ -9,15 +9,9 @@ import {
   Form,
   Button,
 } from 'react-bootstrap';
-import * as yup from 'yup';
 import axios from 'axios';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
-
-const SignUpSchema = yup.object().shape({
-  username: yup.string().min(2, 'От 2 до 20 символов').max(20, 'От 2 до 20 символов').required(),
-  password: yup.string().min(4, 'Не менее 6 символов').required(),
-});
 
 const Login = () => {
   const auth = useAuth();
@@ -55,7 +49,6 @@ const Login = () => {
                   username: '',
                   password: '',
                 }}
-                validationSchema={SignUpSchema}
                 onSubmit={handlerSubmit}
               >
                 {({
@@ -107,7 +100,11 @@ const Login = () => {
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>Нет аккаунта? Регистрация</span>
+                <span>
+                  Нет аккаунта?
+                  &nbsp;
+                  <Link to="/signup">Регистрация</Link>
+                </span>
               </div>
             </Card.Footer>
           </Card>
