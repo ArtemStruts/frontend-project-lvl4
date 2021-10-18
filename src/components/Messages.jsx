@@ -7,15 +7,19 @@ import {
 } from 'react-bootstrap';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useSocket } from '../hooks/index.jsx';
 
 const MessageForm = () => {
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   const socket = useSocket();
   const inputRef = useRef();
+  const { t } = useTranslation();
+
   useEffect(() => {
     inputRef.current.focus();
   }, []);
+
   const f = useFormik({
     initialValues: {
       body: '',
@@ -31,6 +35,7 @@ const MessageForm = () => {
       });
     },
   });
+
   return (
     <Form className="py-1 border rounded-2" noValidate onSubmit={f.handleSubmit}>
       <InputGroup className="has-validation">
@@ -38,7 +43,7 @@ const MessageForm = () => {
           className="border-0 p-0 ps-2"
           name="body"
           data-testid="new-message"
-          placeholder="Введите сообщение..."
+          placeholder={t('text.enterMessage')}
           ref={inputRef}
           value={f.values.body}
           onChange={f.handleChange}
@@ -55,6 +60,7 @@ const MessageForm = () => {
 };
 
 const Messages = () => {
+  const { t } = useTranslation();
   const messages = useSelector((state) => state.messages.messages);
   const channels = useSelector((state) => state.channels.channels);
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
@@ -74,7 +80,7 @@ const Messages = () => {
           <p className="m-0">
             <b>{`# ${currentChannel && currentChannel.name}`}</b>
           </p>
-          <span className="text-muted">{`${currentChannelMessages.length} сообщения`}</span>
+          <span className="text-muted">{t('chat.messages.counter.key', { count: currentChannelMessages.length })}</span>
         </div>
         <div id="messages-box" ref={messageBox} className="overflow-auto px-5">
           {currentChannelMessages.map(({ id, body, username }) => (

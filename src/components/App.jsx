@@ -5,16 +5,13 @@ import {
   Switch,
   Redirect,
 } from 'react-router-dom';
-import { io } from 'socket.io-client';
 import { useDispatch, useSelector } from 'react-redux';
-import { authContext, socketContext } from '../contexts/index.jsx';
+import { authContext } from '../contexts/index.jsx';
 import { useAuth } from '../hooks/index.jsx';
 import Login from './Login.jsx';
 import Chat from './Chat.jsx';
 import AppNavbar from './Navbar.jsx';
 import Signup from './Signup.jsx';
-import { addMessage } from '../slices/messagesSlice.js';
-import { addChannel, removeChannel, renameChannel } from '../slices/channelsSlice.js';
 import { hideModal } from '../slices/modalsSlice.js';
 import getModal from './modals/index.js';
 
@@ -34,33 +31,6 @@ const ProvideAuth = ({ children }) => {
     <authContext.Provider value={{ loggedIn, logIn, logOut }}>
       {children}
     </authContext.Provider>
-  );
-};
-
-const ProvideSocket = ({ children }) => {
-  const socket = io();
-  const dispatch = useDispatch();
-
-  socket.on('newMessage', (message) => {
-    dispatch(addMessage({ message }));
-  });
-
-  socket.on('newChannel', (channel) => {
-    dispatch(addChannel({ channel }));
-  });
-
-  socket.on('removeChannel', ({ id }) => {
-    dispatch(removeChannel({ id }));
-  });
-
-  socket.on('renameChannel', ({ id, name }) => {
-    dispatch(renameChannel({ id, name }));
-  });
-
-  return (
-    <socketContext.Provider value={socket}>
-      {children}
-    </socketContext.Provider>
   );
 };
 
@@ -95,27 +65,25 @@ const App = () => {
   };
   return (
     <ProvideAuth>
-      <ProvideSocket>
-        <Router>
-          <AppNavbar />
+      <Router>
+        <AppNavbar />
 
-          <Switch>
-            <PrivateRoute exact path="/">
-              <Chat />
-            </PrivateRoute>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/signup">
-              <Signup />
-            </Route>
-            <Route path="*">
-              <NoMatch />
-            </Route>
-          </Switch>
-          {renderModal(type, onExited)}
-        </Router>
-      </ProvideSocket>
+        <Switch>
+          <PrivateRoute exact path="/">
+            <Chat />
+          </PrivateRoute>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+          <Route path="*">
+            <NoMatch />
+          </Route>
+        </Switch>
+        {renderModal(type, onExited)}
+      </Router>
     </ProvideAuth>
   );
 };

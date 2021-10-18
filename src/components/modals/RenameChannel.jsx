@@ -7,6 +7,7 @@ import {
   Button,
 } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useSocket } from '../../hooks/index.jsx';
 
 const RenameChannel = (props) => {
@@ -16,6 +17,7 @@ const RenameChannel = (props) => {
   const inputRef = useRef();
 
   const socket = useSocket();
+  const { t } = useTranslation();
 
   const channels = useSelector((state) => state.channels.channels);
   const channelId = useSelector((state) => state.modals.channelId);
@@ -57,7 +59,7 @@ const RenameChannel = (props) => {
     <Modal.Dialog>
       <Modal show={show} onExited={onExited} centered>
         <Modal.Header closeButton onHide={onHide}>
-          <Modal.Title>Переименовать канал</Modal.Title>
+          <Modal.Title>{t('modals.titles.renameChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={f.handleSubmit}>
@@ -73,10 +75,10 @@ const RenameChannel = (props) => {
                 readOnly={f.isSubmitting}
                 ref={inputRef}
               />
-              <FormControl.Feedback type="invalid">Должно быть уникальным</FormControl.Feedback>
+              <FormControl.Feedback type="invalid">{t('errors.mustBeUnique')}</FormControl.Feedback>
               <div className="d-flex justify-content-end">
-                <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>Отменить</Button>
-                <Button variant="primary" type="submit" disabled={f.isSubmitting}>Отправить</Button>
+                <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
+                <Button variant="primary" type="submit" disabled={f.isSubmitting}>{t('buttons.send')}</Button>
               </div>
             </FormGroup>
           </form>

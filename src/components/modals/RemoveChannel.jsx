@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import { useSocket } from '../../hooks/index.jsx';
 
 const RemoveChannel = (props) => {
@@ -9,6 +10,7 @@ const RemoveChannel = (props) => {
   const [show, setShow] = useState(true);
   const channelId = useSelector((state) => state.modals.channelId);
   const socket = useSocket();
+  const { t } = useTranslation();
 
   const onHide = () => {
     setShow(false);
@@ -31,15 +33,15 @@ const RemoveChannel = (props) => {
     <Modal.Dialog>
       <Modal show={show} onExited={onExited} centered>
         <Modal.Header closeButton onHide={onHide}>
-          <Modal.Title>Удалить канал</Modal.Title>
+          <Modal.Title>{t('modals.titles.removeChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={f.handleSubmit}>
             <FormGroup>
-              <p className="lead">Уверены?</p>
+              <p className="lead">{t('modals.body.removeChannel')}</p>
               <div className="d-flex justify-content-end">
-                <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>Отменить</Button>
-                <Button variant="danger" type="submit" disabled={f.isSubmitting}>Удалить</Button>
+                <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
+                <Button variant="danger" type="submit" disabled={f.isSubmitting}>{t('buttons.remove')}</Button>
               </div>
             </FormGroup>
           </form>

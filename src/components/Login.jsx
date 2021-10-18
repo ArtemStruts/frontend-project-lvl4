@@ -10,6 +10,7 @@ import {
   Button,
 } from 'react-bootstrap';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../hooks/index.jsx';
 import routes from '../routes.js';
 
@@ -17,6 +18,7 @@ const Login = () => {
   const auth = useAuth();
   const history = useHistory();
   const [authFailed, setAuthFailed] = useState(false);
+  const { t } = useTranslation();
 
   const handlerSubmit = async (values, { setSubmitting }) => {
     setAuthFailed(false);
@@ -58,13 +60,13 @@ const Login = () => {
                   values,
                 }) => (
                   <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={handleSubmit}>
-                    <h1 className="text-center mb-4">Войти</h1>
+                    <h1 className="text-center mb-4">{t('modals.titles.login')}</h1>
                     <Form.Group className="form-floating mb-3">
-                      <Form.Label htmlFor="username">Ваш ник</Form.Label>
+                      <Form.Label htmlFor="username">{t('modals.labels.nickname')}</Form.Label>
                       <Form.Control
                         id="username"
                         name="username"
-                        placeholder="Ваш ник"
+                        placeholder={t('modals.labels.nickname')}
                         type="text"
                         onChange={handleChange}
                         readOnly={isSubmitting}
@@ -73,18 +75,18 @@ const Login = () => {
                       />
                     </Form.Group>
                     <Form.Group className="form-floating mb-4">
-                      <Form.Label htmlFor="password">Пароль</Form.Label>
+                      <Form.Label htmlFor="password">{t('modals.labels.password')}</Form.Label>
                       <Form.Control
                         id="password"
                         name="password"
                         type="password"
-                        placeholder="Пароль"
+                        placeholder={t('modals.labels.password')}
                         onChange={handleChange}
                         readOnly={isSubmitting}
                         isInvalid={authFailed}
                         value={values.password}
                       />
-                      <Form.Control.Feedback type="invalid">Неверные имя пользователя или пароль</Form.Control.Feedback>
+                      <Form.Control.Feedback type="invalid">{t('errors.invalidUsername')}</Form.Control.Feedback>
                     </Form.Group>
                     <Button
                       type="submit"
@@ -92,7 +94,7 @@ const Login = () => {
                       className="w-100 mb-3"
                       disabled={isSubmitting}
                     >
-                      Войти
+                      {t('buttons.login')}
                     </Button>
                   </Form>
                 )}
@@ -101,7 +103,7 @@ const Login = () => {
             <Card.Footer className="p-4">
               <div className="text-center">
                 <span>
-                  Нет аккаунта?
+                  {t('text.noAccount')}
                   &nbsp;
                   <Link to="/signup">Регистрация</Link>
                 </span>

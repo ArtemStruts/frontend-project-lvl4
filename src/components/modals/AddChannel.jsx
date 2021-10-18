@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import {
   Modal,
   FormGroup,
@@ -14,6 +15,7 @@ const AddChannel = (props) => {
   const [addFailed, setAddFailed] = useState(false);
   const [show, setShow] = useState(true);
   const inputRef = useRef();
+  const { t } = useTranslation();
 
   const socket = useSocket();
   const channels = useSelector((state) => state.channels.channels);
@@ -54,7 +56,7 @@ const AddChannel = (props) => {
     <Modal.Dialog>
       <Modal show={show} onExited={onExited} centered>
         <Modal.Header closeButton onHide={onHide}>
-          <Modal.Title>Добавить канал</Modal.Title>
+          <Modal.Title>{t('modals.titles.addChannel')}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={f.handleSubmit}>
@@ -70,10 +72,10 @@ const AddChannel = (props) => {
                 readOnly={f.isSubmitting}
                 ref={inputRef}
               />
-              <FormControl.Feedback type="invalid">Должно быть уникальным</FormControl.Feedback>
+              <FormControl.Feedback type="invalid">{t('errors.mustBeUnique')}</FormControl.Feedback>
               <div className="d-flex justify-content-end">
-                <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>Отменить</Button>
-                <Button variant="primary" type="submit" disabled={f.isSubmitting}>Отправить</Button>
+                <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
+                <Button variant="primary" type="submit" disabled={f.isSubmitting}>{t('buttons.send')}</Button>
               </div>
             </FormGroup>
           </form>
