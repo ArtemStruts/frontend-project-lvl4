@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import { Provider, useDispatch } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { io } from 'socket.io-client';
@@ -10,9 +10,9 @@ import i18n from './i18n.js';
 import App from './components/App.jsx';
 import store from './store.js';
 
-export default () => {
+export default (socket = io()) => {
   const ProvideSocket = ({ children }) => {
-    const socket = io();
+    // const socket = io();
     const dispatch = useDispatch();
 
     socket.on('newMessage', (message) => {
@@ -38,14 +38,13 @@ export default () => {
     );
   };
 
-  ReactDOM.render(
+  return (
     <I18nextProvider i18n={i18n}>
       <Provider store={store}>
         <ProvideSocket>
           <App />
         </ProvideSocket>
       </Provider>
-    </I18nextProvider>,
-    document.getElementById('chat'),
+    </I18nextProvider>
   );
 };
