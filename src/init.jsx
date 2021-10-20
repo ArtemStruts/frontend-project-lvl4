@@ -1,5 +1,4 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
 import { Provider, useDispatch } from 'react-redux';
 import { I18nextProvider } from 'react-i18next';
 import { io } from 'socket.io-client';
@@ -12,7 +11,6 @@ import store from './store.js';
 
 export default (socket = io()) => {
   const ProvideSocket = ({ children }) => {
-    // const socket = io();
     const dispatch = useDispatch();
 
     socket.on('newMessage', (message) => {

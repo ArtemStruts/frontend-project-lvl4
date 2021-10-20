@@ -105,7 +105,7 @@ const Signup = () => {
                   <Form.Control.Feedback type="invalid">{f.errors.password}</Form.Control.Feedback>
                 </Form.Group>
                 <Form.Group className="form-floating mb-4">
-                  <Form.Label htmlFor="password">{t('modals.labels.confirmPassword')}</Form.Label>
+                  <Form.Label htmlFor="confirmPassword">{t('modals.labels.confirmPassword')}</Form.Label>
                   <Form.Control
                     id="confirmPassword"
                     name="confirmPassword"
