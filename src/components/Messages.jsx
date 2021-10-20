@@ -87,7 +87,9 @@ const Messages = () => {
           {currentChannelMessages.map(({ id, body, username }) => (
             <div key={id} className="text-break mb-2">
               <b>{username}</b>
-              {`: ${body}`}
+              :
+              &nbsp;
+              {body}
             </div>
           ))}
         </div>

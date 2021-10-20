@@ -17,7 +17,8 @@ const NonRemovableChannel = ({ id, name, handleChange }) => {
   const currentChannelId = useSelector((state) => state.channels.currentChannelId);
   return (
     <Button className="w-100 rounded-0 text-start" variant={getButtonVariant(id, currentChannelId)} type="button" onClick={handleChange(id)}>
-      <span className="me-1">{`# ${name}`}</span>
+      <span className="me-1"># </span>
+      {name}
     </Button>
   );
 };
