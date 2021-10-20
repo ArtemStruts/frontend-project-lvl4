@@ -92,7 +92,7 @@ const Login = () => {
                         isInvalid={authFailed}
                         value={values.password}
                       />
-                      <Form.Control.Feedback type="invalid">{t('errors.invalidUsername')}</Form.Control.Feedback>
+                      {authFailed && <Form.Control.Feedback type="invalid">{t('errors.invalidUsername')}</Form.Control.Feedback>}
                     </Form.Group>
                     <Button
                       type="submit"
