@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import { Formik } from 'formik';
 import {
@@ -19,6 +19,11 @@ const Login = () => {
   const history = useHistory();
   const [authFailed, setAuthFailed] = useState(false);
   const { t } = useTranslation();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const handlerSubmit = async (values, { setSubmitting }) => {
     setAuthFailed(false);
@@ -72,6 +77,7 @@ const Login = () => {
                         readOnly={isSubmitting}
                         isInvalid={authFailed}
                         value={values.username}
+                        ref={inputRef}
                       />
                     </Form.Group>
                     <Form.Group className="form-floating mb-4">

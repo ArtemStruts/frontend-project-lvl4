@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import {
@@ -20,6 +20,11 @@ const Signup = () => {
   const history = useHistory();
   const [authFailed, setAuthFailed] = useState(false);
   const { t } = useTranslation();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    inputRef.current.focus();
+  }, []);
 
   const SignUpSchema = yup.object().shape({
     username: yup.string().min(3, t('errors.usernameLength')).max(20, t('errors.usernameLength')).required(),
@@ -80,6 +85,7 @@ const Signup = () => {
                     readOnly={f.isSubmitting}
                     isInvalid={f.errors.username || authFailed}
                     value={f.values.username}
+                    ref={inputRef}
                   />
                   <Form.Control.Feedback type="invalid">{f.errors.username}</Form.Control.Feedback>
                 </Form.Group>
