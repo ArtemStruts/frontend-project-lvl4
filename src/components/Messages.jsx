@@ -70,7 +70,6 @@ const Messages = () => {
   const currentChannelMessages = messages
     .filter(({ channelId }) => Number(channelId) === currentChannelId);
 
-  console.log('message in store', messages);
   const messageBox = useRef();
   useEffect(() => {
     messageBox.current.scrollTop = messageBox.current.scrollHeight;
