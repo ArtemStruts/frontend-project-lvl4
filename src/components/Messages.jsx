@@ -27,6 +27,7 @@ const MessageForm = () => {
     onSubmit: ({ body }, { setSubmitting, resetForm }) => {
       const { username } = JSON.parse(localStorage.getItem('userId'));
       const message = { body, channelId: currentChannelId, username };
+      console.log('message in submit', message);
       socket.emit('newMessage', message, ({ status }) => {
         if (status === 'ok') {
           setSubmitting(false);
@@ -69,6 +70,7 @@ const Messages = () => {
   const currentChannelMessages = messages
     .filter(({ channelId }) => Number(channelId) === currentChannelId);
 
+  console.log('message in store', messages);
   const messageBox = useRef();
   useEffect(() => {
     messageBox.current.scrollTop = messageBox.current.scrollHeight;

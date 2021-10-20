@@ -19,11 +19,11 @@ export const channelsSlice = createSlice({
     },
     addChannel: (state, { payload: { channel } }) => {
       const { id } = channel;
-      const channelsIds = state.channels.map((item) => item.id);
+      // const channelsIds = state.channels.map((item) => item.id);
       const newState = state;
-      if (!channelsIds.includes(id)) {
-        newState.channels = [...state.channels, channel];
-      }
+      //  if (!channelsIds.includes(id)) {
+      newState.channels = [...state.channels, channel];
+      // }
       newState.currentChannelId = id;
     },
     removeChannel: (state, { payload: { id } }) => {

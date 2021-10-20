@@ -10,12 +10,13 @@ export const messagesSlice = createSlice({
   initialState,
   reducers: {
     addMessage: (state, { payload: { message } }) => {
-      const { id } = message;
-      const messagesIds = state.messages.map((item) => item.id);
+      // const { id } = message;
+      console.log(message);
+      // const messagesIds = state.messages.map((item) => item.id);
       const newState = state;
-      if (!messagesIds.includes(id)) {
-        newState.messages = [...state.messages, message];
-      }
+      // if (!messagesIds.includes(id)) {
+      newState.messages = [...state.messages, message];
+    //  }
     },
   },
   extraReducers: (builder) => {

@@ -13,7 +13,6 @@ if (process.env.NODE_ENV !== 'production') {
 
 const run = async () => {
   const vdom = await init();
-  console.log(vdom);
   ReactDOM.render(vdom, document.getElementById('chat'));
 };
 
