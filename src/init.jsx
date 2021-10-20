@@ -9,7 +9,7 @@ import i18n from './i18n.js';
 import App from './components/App.jsx';
 import store from './store.js';
 
-export default (socket = io()) => {
+const Init = (socket = io()) => {
   const ProvideSocket = ({ children }) => {
     const dispatch = useDispatch();
 
@@ -46,3 +46,5 @@ export default (socket = io()) => {
     </I18nextProvider>
   );
 };
+
+export default Init;
