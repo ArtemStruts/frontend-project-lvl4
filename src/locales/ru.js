@@ -40,7 +40,7 @@ export default {
       },
     },
     text: {
-      noAccount: 'Нет аккаунта?',
+      noAccount: 'Нет аккаунта? ',
       enterMessage: 'Введите сообщение...',
     },
     errors: {

@@ -56,35 +56,33 @@ const RenameChannel = (props) => {
   });
 
   return (
-    <Modal.Dialog>
-      <Modal show={show} onExited={onExited} centered>
-        <Modal.Header closeButton onHide={onHide}>
-          <Modal.Title>{t('modals.titles.renameChannel')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={f.handleSubmit}>
-            <FormGroup>
-              <FormControl
-                className="mb-2"
-                name="name"
-                data-testid="rename-channel"
-                required
-                onChange={f.handleChange}
-                isInvalid={addFailed}
-                value={f.values.name}
-                readOnly={f.isSubmitting}
-                ref={inputRef}
-              />
-              <FormControl.Feedback type="invalid">{t('errors.mustBeUnique')}</FormControl.Feedback>
-              <div className="d-flex justify-content-end">
-                <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
-                <Button variant="primary" type="submit" disabled={f.isSubmitting}>{t('buttons.send')}</Button>
-              </div>
-            </FormGroup>
-          </form>
-        </Modal.Body>
-      </Modal>
-    </Modal.Dialog>
+    <Modal show={show} onExited={onExited} onHide={onHide} centered>
+      <Modal.Header closeButton onHide={onHide}>
+        <Modal.Title>{t('modals.titles.renameChannel')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form onSubmit={f.handleSubmit}>
+          <FormGroup>
+            <FormControl
+              className="mb-2"
+              name="name"
+              data-testid="rename-channel"
+              required
+              onChange={f.handleChange}
+              isInvalid={addFailed}
+              value={f.values.name}
+              readOnly={f.isSubmitting}
+              ref={inputRef}
+            />
+            <FormControl.Feedback type="invalid">{t('errors.mustBeUnique')}</FormControl.Feedback>
+            <div className="d-flex justify-content-end">
+              <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
+              <Button variant="primary" type="submit" disabled={f.isSubmitting}>{t('buttons.send')}</Button>
+            </div>
+          </FormGroup>
+        </form>
+      </Modal.Body>
+    </Modal>
   );
 };
 

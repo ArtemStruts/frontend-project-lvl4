@@ -30,24 +30,22 @@ const RemoveChannel = (props) => {
   });
 
   return (
-    <Modal.Dialog>
-      <Modal show={show} onExited={onExited} centered>
-        <Modal.Header closeButton onHide={onHide}>
-          <Modal.Title>{t('modals.titles.removeChannel')}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <form onSubmit={f.handleSubmit}>
-            <FormGroup>
-              <p className="lead">{t('modals.body.removeChannel')}</p>
-              <div className="d-flex justify-content-end">
-                <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
-                <Button variant="danger" type="submit" disabled={f.isSubmitting}>{t('buttons.remove')}</Button>
-              </div>
-            </FormGroup>
-          </form>
-        </Modal.Body>
-      </Modal>
-    </Modal.Dialog>
+    <Modal show={show} onExited={onExited} onHide={onHide} centered>
+      <Modal.Header closeButton onHide={onHide}>
+        <Modal.Title>{t('modals.titles.removeChannel')}</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <form onSubmit={f.handleSubmit}>
+          <FormGroup>
+            <p className="lead">{t('modals.body.removeChannel')}</p>
+            <div className="d-flex justify-content-end">
+              <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
+              <Button variant="danger" type="submit" disabled={f.isSubmitting}>{t('buttons.remove')}</Button>
+            </div>
+          </FormGroup>
+        </form>
+      </Modal.Body>
+    </Modal>
   );
 };
 

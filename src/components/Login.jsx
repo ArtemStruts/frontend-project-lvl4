@@ -45,7 +45,7 @@ const Login = () => {
   return (
     <Container fluid className="h-100">
       <Row className="justify-content-center align-content-center h-100">
-        <Col xs={12} md={8} xxl={6}>
+        <Col xs={12} md={8} xl={8}>
           <Card className="shadow-sm">
             <Card.Body className="row p-5">
               <Col xs={12} md={6} className="d-flex align-items-center justify-content-center">
@@ -78,6 +78,7 @@ const Login = () => {
                         isInvalid={authFailed}
                         value={values.username}
                         ref={inputRef}
+                        size="lg"
                       />
                     </Form.Group>
                     <Form.Group className="form-floating mb-4">
@@ -91,6 +92,7 @@ const Login = () => {
                         readOnly={isSubmitting}
                         isInvalid={authFailed}
                         value={values.password}
+                        size="lg"
                       />
                       {authFailed && <Form.Control.Feedback type="invalid">{t('errors.invalidUsername')}</Form.Control.Feedback>}
                     </Form.Group>
@@ -108,11 +110,8 @@ const Login = () => {
             </Card.Body>
             <Card.Footer className="p-4">
               <div className="text-center">
-                <span>
-                  {t('text.noAccount')}
-                  &nbsp;
-                  <Link to="/signup">Регистрация</Link>
-                </span>
+                <span>{t('text.noAccount')}</span>
+                <Link to="/signup">{t('modals.titles.signup')}</Link>
               </div>
             </Card.Footer>
           </Card>

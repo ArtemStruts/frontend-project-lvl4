@@ -49,7 +49,12 @@ const PrivateRoute = ({ children, exact, path }) => {
   );
 };
 
-const renderModal = (type, onExited) => {
+const renderModal = () => {
+  const type = useSelector((state) => state.modals.type);
+  const dispatch = useDispatch();
+  const onExited = () => {
+    dispatch(hideModal());
+  };
   if (!type) {
     return null;
   }
@@ -57,15 +62,10 @@ const renderModal = (type, onExited) => {
   return <Component onExited={onExited} />;
 };
 
-const App = () => {
-  const type = useSelector((state) => state.modals.type);
-  const dispatch = useDispatch();
-  const onExited = () => {
-    dispatch(hideModal());
-  };
-  return (
-    <ProvideAuth>
-      <Router>
+const App = () => (
+  <ProvideAuth>
+    <Router>
+      <div className="d-flex flex-column h-100">
         <AppNavbar />
 
         <Switch>
@@ -82,11 +82,11 @@ const App = () => {
             <NoMatch />
           </Route>
         </Switch>
-        {renderModal(type, onExited)}
-      </Router>
-    </ProvideAuth>
-  );
-};
+      </div>
+      {renderModal()}
+    </Router>
+  </ProvideAuth>
+);
 
 const NoMatch = () => (<h3>404 (not found)</h3>);
 
