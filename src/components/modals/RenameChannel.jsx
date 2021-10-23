@@ -11,6 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useSocket } from '../../hooks/index.jsx';
 
 const RenameChannel = (props) => {
+  const container = document.getElementById('container');
   const { onExited } = props;
   const [addFailed, setAddFailed] = useState(false);
   const [show, setShow] = useState(true);
@@ -26,10 +27,12 @@ const RenameChannel = (props) => {
 
   useEffect(() => {
     inputRef.current.select();
+    container.setAttribute('aria-hidden', 'true');
   }, []);
 
   const onHide = () => {
     setShow(false);
+    container.removeAttribute('aria-hidden');
   };
 
   const handlerSubmit = ({ name }, { setSubmitting }) => {

@@ -20,18 +20,22 @@ const Chat = () => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
+    const isMounted = false;
     const fetchContent = async () => {
       try {
         const { data } = await axios.get(routes.dataPath(), { headers: getAuthHeader() });
-        dispatch(setInitialChannelsState(data));
-        setIsLoaded(true);
+        if (!isMounted) {
+          dispatch(setInitialChannelsState(data));
+          setIsLoaded(true);
+        }
       } catch (e) {
         setIsLoaded(false);
         throw e;
       }
     };
     fetchContent();
-  }, [dispatch]);
+    return () => isMounted;
+  }, []);
   if (isLoaded) {
     return (
       <div className="container h-100 my-4 overflow-hidden rounded shadow">

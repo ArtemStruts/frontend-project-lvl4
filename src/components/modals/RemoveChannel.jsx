@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { Modal, FormGroup, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -6,14 +6,20 @@ import { useTranslation } from 'react-i18next';
 import { useSocket } from '../../hooks/index.jsx';
 
 const RemoveChannel = (props) => {
+  const container = document.getElementById('container');
   const { onExited } = props;
   const [show, setShow] = useState(true);
   const channelId = useSelector((state) => state.modals.channelId);
   const socket = useSocket();
   const { t } = useTranslation();
 
+  useEffect(() => {
+    container.setAttribute('aria-hidden', 'true');
+  }, []);
+
   const onHide = () => {
     setShow(false);
+    container.removeAttribute('aria-hidden');
   };
 
   const f = useFormik({
