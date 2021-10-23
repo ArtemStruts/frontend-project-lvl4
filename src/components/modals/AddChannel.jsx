@@ -11,7 +11,6 @@ import {
 import { useSocket } from '../../hooks/index.jsx';
 
 const AddChannel = (props) => {
-  const container = document.getElementById('container');
   const { onExited } = props;
   const [addFailed, setAddFailed] = useState(false);
   const [show, setShow] = useState(true);
@@ -24,13 +23,10 @@ const AddChannel = (props) => {
 
   useEffect(() => {
     inputRef.current.focus();
-    const container1 = document.getElementById('container');
-    container1.setAttribute('aria-hidden', 'true');
   }, []);
 
   const onHide = () => {
     setShow(false);
-    container.removeAttribute('aria-hidden');
   };
 
   const handlerSubmit = () => ({ name }, { setSubmitting }) => {
