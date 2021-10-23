@@ -8,6 +8,7 @@ import {
   Card,
   Form,
   Button,
+  FloatingLabel,
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -74,50 +75,53 @@ const Signup = () => {
               <Form className="w-50" onSubmit={f.handleSubmit}>
                 <h1 className="text-center mb-4">{t('modals.titles.signup')}</h1>
                 <Form.Group className="form-floating mb-3">
-                  <Form.Label htmlFor="username">{t('modals.labels.username')}</Form.Label>
-                  <Form.Control
-                    id="username"
-                    name="username"
-                    placeholder={t('modals.labels.username')}
-                    type="text"
-                    required
-                    onChange={f.handleChange}
-                    readOnly={f.isSubmitting}
-                    isInvalid={f.errors.username || authFailed}
-                    value={f.values.username}
-                    ref={inputRef}
-                  />
-                  <Form.Control.Feedback type="invalid">{f.errors.username}</Form.Control.Feedback>
+                  <FloatingLabel label={t('modals.labels.username')}>
+                    <Form.Control
+                      id="username"
+                      name="username"
+                      placeholder={t('modals.labels.username')}
+                      type="text"
+                      required
+                      onChange={f.handleChange}
+                      readOnly={f.isSubmitting}
+                      isInvalid={f.errors.username || authFailed}
+                      value={f.values.username}
+                      ref={inputRef}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>{f.errors.username}</Form.Control.Feedback>
+                  </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="form-floating mb-3">
-                  <Form.Label htmlFor="password">{t('modals.labels.password')}</Form.Label>
-                  <Form.Control
-                    id="password"
-                    name="password"
-                    type="password"
-                    placeholder={t('modals.labels.password')}
-                    required
-                    onChange={f.handleChange}
-                    readOnly={f.isSubmitting}
-                    isInvalid={f.errors.password || authFailed}
-                    value={f.values.password}
-                  />
-                  <Form.Control.Feedback type="invalid">{f.errors.password}</Form.Control.Feedback>
+                  <FloatingLabel label={t('modals.labels.password')}>
+                    <Form.Control
+                      id="password"
+                      name="password"
+                      type="password"
+                      placeholder={t('modals.labels.password')}
+                      required
+                      onChange={f.handleChange}
+                      readOnly={f.isSubmitting}
+                      isInvalid={f.errors.password || authFailed}
+                      value={f.values.password}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>{f.errors.password}</Form.Control.Feedback>
+                  </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="form-floating mb-4">
-                  <Form.Label htmlFor="confirmPassword">{t('modals.labels.confirmPassword')}</Form.Label>
-                  <Form.Control
-                    id="confirmPassword"
-                    name="confirmPassword"
-                    type="password"
-                    placeholder={t('modals.labels.confirmPassword')}
-                    required
-                    onChange={f.handleChange}
-                    readOnly={f.isSubmitting}
-                    isInvalid={f.errors.confirmPassword || authFailed}
-                    value={f.values.confirmPassword}
-                  />
-                  <Form.Control.Feedback type="invalid">{authFailed ? t('errors.existingUser') : f.errors.confirmPassword}</Form.Control.Feedback>
+                  <FloatingLabel label={t('modals.labels.confirmPassword')}>
+                    <Form.Control
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type="password"
+                      placeholder={t('modals.labels.confirmPassword')}
+                      required
+                      onChange={f.handleChange}
+                      readOnly={f.isSubmitting}
+                      isInvalid={f.errors.confirmPassword || authFailed}
+                      value={f.values.confirmPassword}
+                    />
+                    <Form.Control.Feedback type="invalid" tooltip>{authFailed ? t('errors.existingUser') : f.errors.confirmPassword}</Form.Control.Feedback>
+                  </FloatingLabel>
                 </Form.Group>
                 <Button
                   type="submit"

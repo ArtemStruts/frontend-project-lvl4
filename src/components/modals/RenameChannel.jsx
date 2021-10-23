@@ -77,6 +77,7 @@ const RenameChannel = (props) => {
             <FormControl.Feedback type="invalid">{t('errors.mustBeUnique')}</FormControl.Feedback>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
+              &nbsp;
               <Button variant="primary" type="submit" disabled={f.isSubmitting}>{t('buttons.send')}</Button>
             </div>
           </FormGroup>

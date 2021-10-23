@@ -40,6 +40,7 @@ const RemoveChannel = (props) => {
             <p className="lead">{t('modals.body.removeChannel')}</p>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
+              &nbsp;
               <Button variant="danger" type="submit" disabled={f.isSubmitting}>{t('buttons.remove')}</Button>
             </div>
           </FormGroup>

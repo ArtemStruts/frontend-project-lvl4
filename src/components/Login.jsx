@@ -8,6 +8,7 @@ import {
   Card,
   Form,
   Button,
+  FloatingLabel,
 } from 'react-bootstrap';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -67,34 +68,34 @@ const Login = () => {
                   <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={handleSubmit}>
                     <h1 className="text-center mb-4">{t('modals.titles.login')}</h1>
                     <Form.Group className="form-floating mb-3">
-                      <Form.Label htmlFor="username">{t('modals.labels.nickname')}</Form.Label>
-                      <Form.Control
-                        id="username"
-                        name="username"
-                        placeholder={t('modals.labels.nickname')}
-                        type="text"
-                        onChange={handleChange}
-                        readOnly={isSubmitting}
-                        isInvalid={authFailed}
-                        value={values.username}
-                        ref={inputRef}
-                        size="lg"
-                      />
+                      <FloatingLabel label={t('modals.labels.nickname')}>
+                        <Form.Control
+                          id="username"
+                          name="username"
+                          placeholder={t('modals.labels.nickname')}
+                          type="text"
+                          onChange={handleChange}
+                          readOnly={isSubmitting}
+                          isInvalid={authFailed}
+                          value={values.username}
+                          ref={inputRef}
+                        />
+                      </FloatingLabel>
                     </Form.Group>
                     <Form.Group className="form-floating mb-4">
-                      <Form.Label htmlFor="password">{t('modals.labels.password')}</Form.Label>
-                      <Form.Control
-                        id="password"
-                        name="password"
-                        type="password"
-                        placeholder={t('modals.labels.password')}
-                        onChange={handleChange}
-                        readOnly={isSubmitting}
-                        isInvalid={authFailed}
-                        value={values.password}
-                        size="lg"
-                      />
-                      {authFailed && <Form.Control.Feedback type="invalid">{t('errors.invalidUsername')}</Form.Control.Feedback>}
+                      <FloatingLabel label={t('modals.labels.password')}>
+                        <Form.Control
+                          id="password"
+                          name="password"
+                          type="password"
+                          placeholder={t('modals.labels.password')}
+                          onChange={handleChange}
+                          readOnly={isSubmitting}
+                          isInvalid={authFailed}
+                          value={values.password}
+                        />
+                        {authFailed && <Form.Control.Feedback type="invalid" tooltip>{t('errors.invalidUsername')}</Form.Control.Feedback>}
+                      </FloatingLabel>
                     </Form.Group>
                     <Button
                       type="submit"
