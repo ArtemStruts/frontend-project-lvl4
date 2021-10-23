@@ -24,7 +24,8 @@ const AddChannel = (props) => {
 
   useEffect(() => {
     inputRef.current.focus();
-    container.setAttribute('aria-hidden', 'true');
+    const container1 = document.getElementById('container');
+    container1.setAttribute('aria-hidden', 'true');
   }, []);
 
   const onHide = () => {

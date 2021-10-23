@@ -20,21 +20,17 @@ const Chat = () => {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    const isMounted = false;
     const fetchContent = async () => {
       try {
         const { data } = await axios.get(routes.dataPath(), { headers: getAuthHeader() });
-        if (!isMounted) {
-          dispatch(setInitialChannelsState(data));
-          setIsLoaded(true);
-        }
+        dispatch(setInitialChannelsState(data));
+        setIsLoaded(true);
       } catch (e) {
         setIsLoaded(false);
         throw e;
       }
     };
     fetchContent();
-    return () => isMounted;
   }, []);
   if (isLoaded) {
     return (
