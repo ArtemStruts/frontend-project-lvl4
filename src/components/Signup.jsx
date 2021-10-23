@@ -8,7 +8,6 @@ import {
   Card,
   Form,
   Button,
-  FloatingLabel,
 } from 'react-bootstrap';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -74,8 +73,8 @@ const Signup = () => {
               </div>
               <Form className="w-50" onSubmit={f.handleSubmit}>
                 <h1 className="text-center mb-4">{t('modals.titles.signup')}</h1>
-                <Form.Group className="form-floating mb-3">
-                  <FloatingLabel label={t('modals.labels.username')} htmlFor="username">
+                <Form.Group className="mb-3">
+                  <Form.Floating>
                     <Form.Control
                       id="username"
                       name="username"
@@ -88,11 +87,12 @@ const Signup = () => {
                       value={f.values.username}
                       ref={inputRef}
                     />
+                    <label htmlFor="username">{t('modals.labels.username')}</label>
                     <Form.Control.Feedback type="invalid" tooltip>{f.errors.username}</Form.Control.Feedback>
-                  </FloatingLabel>
+                  </Form.Floating>
                 </Form.Group>
-                <Form.Group className="form-floating mb-3">
-                  <FloatingLabel label={t('modals.labels.password')} htmlFor="password">
+                <Form.Group className="mb-3">
+                  <Form.Floating>
                     <Form.Control
                       id="password"
                       name="password"
@@ -104,11 +104,12 @@ const Signup = () => {
                       isInvalid={f.errors.password || authFailed}
                       value={f.values.password}
                     />
+                    <label htmlFor="password">{t('modals.labels.password')}</label>
                     <Form.Control.Feedback type="invalid" tooltip>{f.errors.password}</Form.Control.Feedback>
-                  </FloatingLabel>
+                  </Form.Floating>
                 </Form.Group>
-                <Form.Group className="form-floating mb-4">
-                  <FloatingLabel label={t('modals.labels.confirmPassword')} htmlFor="confirmPassword">
+                <Form.Group className="mb-4">
+                  <Form.Floating>
                     <Form.Control
                       id="confirmPassword"
                       name="confirmPassword"
@@ -120,8 +121,9 @@ const Signup = () => {
                       isInvalid={f.errors.confirmPassword || authFailed}
                       value={f.values.confirmPassword}
                     />
+                    <label htmlFor="confirmPassword">{t('modals.labels.confirmPassword')}</label>
                     <Form.Control.Feedback type="invalid" tooltip>{authFailed ? t('errors.existingUser') : f.errors.confirmPassword}</Form.Control.Feedback>
-                  </FloatingLabel>
+                  </Form.Floating>
                 </Form.Group>
                 <Button
                   type="submit"

@@ -8,7 +8,6 @@ import {
   Card,
   Form,
   Button,
-  FloatingLabel,
 } from 'react-bootstrap';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
@@ -67,8 +66,8 @@ const Login = () => {
                 }) => (
                   <Form className="col-12 col-md-6 mt-3 mt-mb-0" onSubmit={handleSubmit}>
                     <h1 className="text-center mb-4">{t('modals.titles.login')}</h1>
-                    <Form.Group className="form-floating mb-3">
-                      <FloatingLabel label={t('modals.labels.nickname')} htmlFor="usename">
+                    <Form.Group className="mb-3">
+                      <Form.Floating>
                         <Form.Control
                           id="username"
                           name="username"
@@ -80,10 +79,11 @@ const Login = () => {
                           value={values.username}
                           ref={inputRef}
                         />
-                      </FloatingLabel>
+                        <label htmlFor="usename">{t('modals.labels.nickname')}</label>
+                      </Form.Floating>
                     </Form.Group>
-                    <Form.Group className="form-floating mb-4">
-                      <FloatingLabel label={t('modals.labels.password')} htmlFor="password">
+                    <Form.Group className="mb-4">
+                      <Form.Floating>
                         <Form.Control
                           id="password"
                           name="password"
@@ -94,8 +94,9 @@ const Login = () => {
                           isInvalid={authFailed}
                           value={values.password}
                         />
+                        <label htmlFor="password">{t('modals.labels.password')}</label>
                         {authFailed && <Form.Control.Feedback type="invalid" tooltip>{t('errors.invalidUsername')}</Form.Control.Feedback>}
-                      </FloatingLabel>
+                      </Form.Floating>
                     </Form.Group>
                     <Button
                       type="submit"
