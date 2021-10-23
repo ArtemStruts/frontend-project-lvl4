@@ -79,7 +79,7 @@ const Login = () => {
                           value={values.username}
                           ref={inputRef}
                         />
-                        <label htmlFor="usename">{t('modals.labels.nickname')}</label>
+                        <label htmlFor="username">{t('modals.labels.nickname')}</label>
                       </Form.Floating>
                     </Form.Group>
                     <Form.Group className="mb-4">
