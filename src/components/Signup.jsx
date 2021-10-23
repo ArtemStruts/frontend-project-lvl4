@@ -75,7 +75,7 @@ const Signup = () => {
               <Form className="w-50" onSubmit={f.handleSubmit}>
                 <h1 className="text-center mb-4">{t('modals.titles.signup')}</h1>
                 <Form.Group className="form-floating mb-3">
-                  <FloatingLabel label={t('modals.labels.username')}>
+                  <FloatingLabel label={t('modals.labels.username')} htmlFor="username">
                     <Form.Control
                       id="username"
                       name="username"
@@ -92,7 +92,7 @@ const Signup = () => {
                   </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="form-floating mb-3">
-                  <FloatingLabel label={t('modals.labels.password')}>
+                  <FloatingLabel label={t('modals.labels.password')} htmlFor="password">
                     <Form.Control
                       id="password"
                       name="password"
@@ -108,7 +108,7 @@ const Signup = () => {
                   </FloatingLabel>
                 </Form.Group>
                 <Form.Group className="form-floating mb-4">
-                  <FloatingLabel label={t('modals.labels.confirmPassword')}>
+                  <FloatingLabel label={t('modals.labels.confirmPassword')} htmlFor="confirmPassword">
                     <Form.Control
                       id="confirmPassword"
                       name="confirmPassword"
