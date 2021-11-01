@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Row } from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Messages from './Messages.jsx';
 import Channels from './Channels.jsx';
 import routes from '../routes.js';
@@ -18,6 +18,7 @@ const getAuthHeader = () => {
 
 const Chat = () => {
   const dispatch = useDispatch();
+  const modalInfo = useSelector((state) => state.modals.isOpen);
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
     const fetchContent = async () => {
@@ -34,7 +35,7 @@ const Chat = () => {
   }, []);
   if (isLoaded) {
     return (
-      <div className="container h-100 my-4 overflow-hidden rounded shadow">
+      <div className="container h-100 my-4 overflow-hidden rounded shadow" aria-hidden={modalInfo}>
         <Row className="h-100 bg-white flex-md-row">
           <Channels />
           <Messages />

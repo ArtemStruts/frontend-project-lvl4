@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import {
   Modal,
   FormGroup,
@@ -23,6 +24,10 @@ const RenameChannel = (props) => {
   const channelId = useSelector((state) => state.modals.channelId);
   const channelsNames = channels.map(({ name }) => name);
   const channelName = useSelector((state) => state.modals.channelName);
+
+  const channelNameSchema = yup.object().shape({
+    name: yup.string().min(3, t('errors.wrongLength')).max(20, t('errors.wrongLength')).required(),
+  });
 
   useEffect(() => {
     inputRef.current.select();
@@ -52,6 +57,7 @@ const RenameChannel = (props) => {
     initialValues: {
       name: channelName,
     },
+    validationSchema: channelNameSchema,
     onSubmit: handlerSubmit,
   });
 
@@ -69,12 +75,12 @@ const RenameChannel = (props) => {
               data-testid="rename-channel"
               required
               onChange={f.handleChange}
-              isInvalid={addFailed}
+              isInvalid={f.errors.name || addFailed}
               value={f.values.name}
               readOnly={f.isSubmitting}
               ref={inputRef}
             />
-            <FormControl.Feedback type="invalid">{t('errors.mustBeUnique')}</FormControl.Feedback>
+            <FormControl.Feedback type="invalid">{addFailed ? t('errors.mustBeUnique') : f.errors.name}</FormControl.Feedback>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
               &nbsp;

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import {
@@ -20,6 +21,10 @@ const AddChannel = (props) => {
   const socket = useSocket();
   const channels = useSelector((state) => state.channels.channels);
   const channelsNames = channels.map(({ name }) => name);
+
+  const channelNameSchema = yup.object().shape({
+    name: yup.string().min(3, t('errors.wrongLength')).max(20, t('errors.wrongLength')).required(),
+  });
 
   useEffect(() => {
     inputRef.current.focus();
@@ -49,6 +54,7 @@ const AddChannel = (props) => {
     initialValues: {
       name: '',
     },
+    validationSchema: channelNameSchema,
     onSubmit: handlerSubmit(),
   });
 
@@ -66,12 +72,12 @@ const AddChannel = (props) => {
               data-testid="add-channel"
               required
               onChange={f.handleChange}
-              isInvalid={addFailed}
+              isInvalid={addFailed || f.errors.name}
               value={f.values.name}
               readOnly={f.isSubmitting}
               ref={inputRef}
             />
-            <FormControl.Feedback type="invalid">{t('errors.mustBeUnique')}</FormControl.Feedback>
+            <FormControl.Feedback type="invalid">{addFailed ? t('errors.mustBeUnique') : f.errors.name}</FormControl.Feedback>
             <div className="d-flex justify-content-end">
               <Button variant="secondary" type="button" onClick={onHide} disabled={f.isSubmitting}>{t('buttons.cancel')}</Button>
               &nbsp;

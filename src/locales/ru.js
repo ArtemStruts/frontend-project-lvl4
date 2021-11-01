@@ -47,7 +47,7 @@ export default {
       mustBeUnique: 'Должно быть уникальным',
       invalidUsername: 'Неверные имя пользователя или пароль',
       existingUser: 'Такой пользователь уже существует',
-      usernameLength: 'От 3 до 20 символов',
+      wrongLength: 'От 3 до 20 символов',
       passwordLength: 'Не менее 6 символов',
       passwordConfirmation: 'Пароли должны совпадать',
     },

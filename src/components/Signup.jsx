@@ -27,7 +27,7 @@ const Signup = () => {
   }, []);
 
   const SignUpSchema = yup.object().shape({
-    username: yup.string().min(3, t('errors.usernameLength')).max(20, t('errors.usernameLength')).required(),
+    username: yup.string().min(3, t('errors.wrongLength')).max(20, t('errors.wrongLength')).required(),
     password: yup.string().min(6, t('errors.passwordLength')),
     confirmPassword: yup.string().oneOf([yup.ref('password')], t('errors.passwordConfirmation')),
   });
