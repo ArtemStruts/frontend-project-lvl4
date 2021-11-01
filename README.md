@@ -2,6 +2,9 @@
 [![Actions Status](https://github.com/ArtemStruts/frontend-project-lvl4/workflows/hexlet-check/badge.svg)](https://github.com/ArtemStruts/frontend-project-lvl4/actions)
 [![Actions Status](https://github.com/ArtemStruts/frontend-project-lvl4/actions/workflows/nodejs.yml/badge.svg)](https://github.com/ArtemStruts/frontend-project-lvl4/actions)
 
+## Description
+Analogue of Slack-chat (simplified version).
+
 ## Install
 
 ```sh
